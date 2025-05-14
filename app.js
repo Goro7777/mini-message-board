@@ -23,6 +23,10 @@ app.get("/", (req, res) => {
     res.render("pages/index", { messages });
 });
 
+app.get("/form", (req, res) => {
+    res.render("pages/form");
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Listening to requests on port ${PORT}`);
