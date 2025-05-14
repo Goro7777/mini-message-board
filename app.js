@@ -3,6 +3,8 @@ const express = require("express");
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -25,6 +27,20 @@ app.get("/", (req, res) => {
 
 app.get("/form", (req, res) => {
     res.render("pages/form");
+});
+
+app.post("/new", (req, res) => {
+    let newMessage = {
+        text: req.body.messageText,
+        user: req.body.messageUser,
+        added: new Date(),
+    };
+    messages.push(newMessage);
+    res.redirect("/");
+});
+
+app.all("/{*any}", (req, res, next) => {
+    res.redirect("/");
 });
 
 const PORT = process.env.PORT || 3000;
