@@ -1,14 +1,18 @@
 <%- include('../partials/header', { title: "Message Board" }) %>
 <main class="container py-5">
     <h1>All Messages</h1>
-    <ul>
-        <% for (let message of messages) { %>
-        <li>
-            <div><%= message.user %></div>
-            <p><%= message.text %></p>
-            <div><%= message.added %></div>
-        </li>
-        <% } %>
-    </ul>
+    <% for (let message of messages) { %>
+    <div class="card mb-3 col-md-8">
+        <div class="card-body">
+            <h5 class="card-title"><%= message.user %></h5>
+            <p class="card-text"><%= message.text %></p>
+            <p class="card-text">
+                <small class="text-body-secondary"
+                    ><%= message.added.toLocaleDateString() %></small
+                >
+            </p>
+        </div>
+    </div>
+    <% } %>
 </main>
 <%- include('../partials/footer') %>
