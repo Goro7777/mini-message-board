@@ -11,6 +11,13 @@ app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+// TODO
+
+// Delete message
+// Edit message
+// Add a router
+// Update form field names
+
 app.get("/", async (req, res) => {
     const messages = await db.getAllMessages();
     const messagesFormatted = messages.map((message) => ({
