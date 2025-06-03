@@ -3,8 +3,8 @@
     <h1>All Messages</h1>
     <% for (let message of messages) { %>
     <div class="card mb-3 col-md-8">
-        <%- include('../partials/card', { message, link: {text: "Open", href:
-        "/messages/" + message.id } }) %>
+        <%- include('../partials/card', { message, links: [ {text: "Open",
+        href:"/messages/" + message.id } ] }) %>
     </div>
     <% } %>
 </main>

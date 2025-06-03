@@ -1,8 +1,10 @@
 <%- include('../partials/header', { title: "Message Board" }) %>
 <main class="container py-5">
     <div class="card mb-3 col-md-8">
-        <%- include('../partials/card', { message, link: { text: "Back", href:
-        "/" } }) %>
+        <%- include('../partials/card', { message, links: [{ text: "Back", href:
+        "/" }, {text: "Edit", href: "/edit/" + message.id, type: "link-success"
+        }, {text: "Delete", href: "/messages/delete/" + message.id, type:
+        "link-danger" }] }) %>
     </div>
 </main>
 <%- include('../partials/footer') %>

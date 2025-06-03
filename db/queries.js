@@ -21,13 +21,14 @@ async function addMessage(message) {
     );
 }
 
-// async function deleteUsernames() {
-//     await pool.query("DELETE FROM usernames");
-// }
+async function deleteMessage(id) {
+    await pool.query(`DELETE FROM messages WHERE id = ${id}`);
+}
 
 module.exports = {
     getAllMessages,
     getMessage,
     addMessage,
+    deleteMessage,
     // deleteUsernames,
 };

@@ -6,11 +6,13 @@
             ><%= message.added.toGMTString() %></small
         >
         <p>
-        <a
+        <% for (const link of links) { %>
+            <a
             href="<%= link.href %>"
-            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+            class="card-link <%= link.type %>"
             ><%= link.text %></a
         >
+        <% } %>
         </p>
     </p>
 </div>

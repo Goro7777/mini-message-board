@@ -34,6 +34,13 @@ app.get("/messages/:id", async (req, res) => {
     res.render("pages/message", { message });
 });
 
+// delete
+app.get("/messages/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    await db.deleteMessage(id);
+    res.redirect("/");
+});
+
 app.get("/new", (req, res) => {
     res.render("pages/new");
 });
