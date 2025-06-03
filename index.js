@@ -43,13 +43,16 @@ app.get("/form", (req, res) => {
 });
 
 app.post("/new", (req, res) => {
-    let newMessage = {
-        id: uuid(),
-        text: req.body.messageText,
-        user: req.body.messageUser,
-        added: new Date(),
-    };
-    messages.push(newMessage);
+    let text = req.body.messageText;
+    if (text.trim()) {
+        let newMessage = {
+            id: uuid(),
+            text,
+            user: req.body.messageUser,
+            added: new Date(),
+        };
+        messages.push(newMessage);
+    }
     res.redirect("/");
 });
 
