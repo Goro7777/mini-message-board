@@ -1,6 +1,9 @@
 const path = require("node:path");
 const express = require("express");
+require("dotenv").config();
+const db = require("./db/queries");
 const { getTextShort, uuid } = require("./util");
+const { text } = require("node:stream/consumers");
 
 const app = express();
 
@@ -24,12 +27,14 @@ const messages = [
     },
 ];
 
-app.get("/", (req, res) => {
-    const messagesShort = messages.map((m) => ({
-        ...m,
-        text: getTextShort(m.text),
+app.get("/", async (req, res) => {
+    const messages = await db.getMessages();
+    const messagesFormatted = messages.map((message) => ({
+        ...message,
+        text: getTextShort(message.text),
+        added: new Date(message.added),
     }));
-    res.render("pages/index", { messages: messagesShort });
+    res.render("pages/index", { messages: messagesFormatted });
 });
 
 app.get("/messages/:id", (req, res) => {
