@@ -1,27 +1,33 @@
 const pool = require("./pool");
 
-async function getMessages() {
-    const { rows } = await pool.query("SELECT * FROM messages");
+async function getAllMessages() {
+    const { rows } = await pool.query(
+        "SELECT * FROM messages ORDER BY added DESC"
+    );
     return rows;
-    // const { rows } = await pool.query(
-    //     "SELECT * FROM usernames WHERE LOWER(username) LIKE $1",
-    //     ["%" + search.toLowerCase() + "%"]
-    // );
-    // return rows;
+}
+
+async function getMessage(id) {
+    const { rows } = await pool.query(
+        `SELECT * FROM messages WHERE id = ${id}`
+    );
+    return rows[0];
+}
+
+async function addMessage(message) {
+    await pool.query(
+        "INSERT INTO messages (username, text, added) VALUES ($1, $2, to_timestamp($3))",
+        [message.username, message.text, message.added / 1000]
+    );
 }
 
 // async function deleteUsernames() {
 //     await pool.query("DELETE FROM usernames");
 // }
 
-// async function insertUsername(username) {
-//     await pool.query("INSERT INTO usernames (username) VALUES ($1)", [
-//         username,
-//     ]);
-// }
-
 module.exports = {
-    getMessages,
-    // insertUsername,
+    getAllMessages,
+    getMessage,
+    addMessage,
     // deleteUsernames,
 };
