@@ -10,12 +10,9 @@ app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// TODO
-// Add controllers
-
 app.use("/", messagesRouter);
 
-// catch-all error-handling middleware
+// catch-all middleware for handling errors
 app.use((err, req, res, next) => {
     console.error(err);
     res.redirect("/");
