@@ -2,9 +2,9 @@
 <main class="container py-5">
     <div class="card mb-3 col-md-8">
         <%- include('../partials/card', { message, links: [{ text: "Messages",
-        href: "/" }, {text: "Edit", href: "/messages/edit/" + message.id, type:
-        "link-success" }, {text: "Delete", href: "/messages/delete/" +
-        message.id, type: "link-danger" }] }) %>
+        href: "/" }, {text: "Edit", href: "/edit/" + message.id, type:
+        "link-success" }, {text: "Delete", href: "/delete/" + message.id, type:
+        "link-danger" }] }) %>
     </div>
 </main>
 <%- include('../partials/footer') %>

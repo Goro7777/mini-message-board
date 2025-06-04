@@ -13,10 +13,11 @@ app.set("view engine", "ejs");
 
 // TODO
 
-// clean up routes
 // Update form field names
+// add error catcher
 // Add a router
 
+// show all messages
 app.get("/", async (req, res) => {
     const messages = await db.getAllMessages();
     const messagesFormatted = messages.map((message) => ({
@@ -27,46 +28,7 @@ app.get("/", async (req, res) => {
     res.render("pages/index", { messages: messagesFormatted });
 });
 
-app.get("/messages/:id", async (req, res) => {
-    const id = req.params.id;
-    const message = await db.getMessage(id);
-    res.render("pages/message", { message });
-});
-
-// delete
-app.get("/messages/delete/:id", async (req, res) => {
-    const id = req.params.id;
-    await db.deleteMessage(id);
-    res.redirect("/");
-});
-
-// edit
-app.get("/messages/edit/:id", async (req, res) => {
-    const id = req.params.id;
-    const message = await db.getMessage(id);
-    res.render("pages/form", {
-        title: "Edit Message",
-        message,
-        action: "/messages/edit/" + message.id,
-    });
-});
-
-app.post("/messages/edit/:id", async (req, res) => {
-    let text = req.body.messageText.trim();
-    let username = req.body.messageUser.trim();
-    let id = req.params.id;
-    if (text && username) {
-        db.editMessage({
-            id,
-            username,
-            text,
-            added: new Date(),
-        });
-    }
-    res.redirect(`/messages/${id}`);
-});
-
-// add
+// add a new message
 app.get("/new", (req, res) => {
     res.render("pages/form", {
         title: "New Message",
@@ -87,6 +49,46 @@ app.post("/new", async (req, res) => {
         await db.addMessage(newMessage);
     }
     res.redirect("/");
+});
+
+// show a message
+app.get("/:id", async (req, res) => {
+    const id = req.params.id;
+    const message = await db.getMessage(id);
+    res.render("pages/message", { message });
+});
+
+// delete a message
+app.get("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    await db.deleteMessage(id);
+    res.redirect("/");
+});
+
+// edit a message
+app.get("/edit/:id", async (req, res) => {
+    const id = req.params.id;
+    const message = await db.getMessage(id);
+    res.render("pages/form", {
+        title: "Edit Message",
+        message,
+        action: "/edit/" + message.id,
+    });
+});
+
+app.post("/edit/:id", async (req, res) => {
+    let text = req.body.messageText.trim();
+    let username = req.body.messageUser.trim();
+    let id = req.params.id;
+    if (text && username) {
+        db.editMessage({
+            id,
+            username,
+            text,
+            added: new Date(),
+        });
+    }
+    res.redirect(`/${id}`);
 });
 
 app.all("/{*any}", (req, res, next) => {
