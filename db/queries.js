@@ -25,10 +25,19 @@ async function deleteMessage(id) {
     await pool.query(`DELETE FROM messages WHERE id = ${id}`);
 }
 
+async function editMessage(message) {
+    await pool.query(
+        `UPDATE messages 
+        SET username = $1, text = $2, added = to_timestamp($3) 
+        WHERE id = ${message.id}`,
+        [message.username, message.text, message.added / 1000]
+    );
+}
+
 module.exports = {
     getAllMessages,
     getMessage,
     addMessage,
     deleteMessage,
-    // deleteUsernames,
+    editMessage,
 };
