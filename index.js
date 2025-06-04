@@ -12,8 +12,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // TODO
-
-// add error catcher
 // Add a router
 
 // show all messages
@@ -93,7 +91,9 @@ app.post("/edit/:id", async (req, res) => {
     res.redirect(`/${id}`);
 });
 
-app.all("/{*any}", (req, res, next) => {
+// catch-all error-handling middleware
+app.use((err, req, res, next) => {
+    console.error(err);
     res.redirect("/");
 });
 
