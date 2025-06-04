@@ -13,7 +13,6 @@ app.set("view engine", "ejs");
 
 // TODO
 
-// Update form field names
 // add error catcher
 // Add a router
 
@@ -25,7 +24,10 @@ app.get("/", async (req, res) => {
         text: getTextShort(message.text),
         added: new Date(message.added),
     }));
-    res.render("pages/index", { messages: messagesFormatted });
+    res.render("pages/index", {
+        messages: messagesFormatted,
+        title: "Message Board",
+    });
 });
 
 // add a new message
@@ -38,8 +40,8 @@ app.get("/new", (req, res) => {
 });
 
 app.post("/new", async (req, res) => {
-    let text = req.body.messageText.trim();
-    let username = req.body.messageUser.trim();
+    let text = req.body.text.trim();
+    let username = req.body.username.trim();
     if (text && username) {
         let newMessage = {
             username,
@@ -55,7 +57,7 @@ app.post("/new", async (req, res) => {
 app.get("/:id", async (req, res) => {
     const id = req.params.id;
     const message = await db.getMessage(id);
-    res.render("pages/message", { message });
+    res.render("pages/message", { message, title: "Message" });
 });
 
 // delete a message
@@ -77,8 +79,8 @@ app.get("/edit/:id", async (req, res) => {
 });
 
 app.post("/edit/:id", async (req, res) => {
-    let text = req.body.messageText.trim();
-    let username = req.body.messageUser.trim();
+    let text = req.body.text.trim();
+    let username = req.body.username.trim();
     let id = req.params.id;
     if (text && username) {
         db.editMessage({
