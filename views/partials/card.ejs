@@ -1,6 +1,10 @@
 <div class="card-body">
     <h5 class="card-title"><%= message.username %></h5>
-    <p class="card-text"><%- message.text.replaceAll("\n", "<br>") %></p>
+    <p class="card-text">
+        <% for (let line of message.text.split("\n")) { %>
+        <div><%= line %></div>
+        <% } %>
+        </p>
     <p class="card-text">
         <small class="text-body-secondary"
             ><%= message.added.toGMTString() %></small
